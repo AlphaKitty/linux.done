@@ -319,8 +319,6 @@ linux.done/
 │   ├── icon48.png
 │   ├── icon128.png
 │   ├── wechat-pay.png     # 赞赏码（设置页使用）
-│   ├── 赞赏码.png         # 赞赏码（README 展示）
-│   └── 赞赏码1.png        # 赞赏码备选
 ├── package.json
 ├── LICENSE                # MIT
 ├── .gitignore
