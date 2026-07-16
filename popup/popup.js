@@ -414,28 +414,36 @@ async function handleToggleAutoRemove() {
 }
 
 /**
- * 点击帖子/互动：打开链接；若开启阅后即焚则从两侧列表与 storage 移除
+ * 点击帖子/互动：打开链接；若开启阅后即焚则从 storage 与两侧列表移除。
+ *
+ * ⚠️ 顺序重要：chrome.tabs.create 打开标签页会关闭 popup，
+ * 必须先 await storage 写入完成再打开标签页。
  */
 async function handleItemOpen(el) {
   const url = el?.dataset?.url;
   const postId = el?.dataset?.postId;
-  if (url) chrome.tabs.create({ url });
-  if (!autoRemoveOnOpen || !postId) return;
 
-  document.querySelectorAll(
-    `.matched-item[data-post-id="${cssEscape(postId)}"], .activity-item[data-post-id="${cssEscape(postId)}"]`
-  ).forEach(node => node.remove());
+  // 1) 先从 storage 移除（在打开标签页之前，确保异步写入完成）
+  if (autoRemoveOnOpen && postId) {
+    try { await removeMatchedPost(postId); } catch {}
+  }
 
-  for (const listId of ['newTopicsList', 'activityList']) {
-    const list = byId(listId);
-    if (list && list.children.length === 0) {
-      list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
+  // 2) 从 DOM 移除
+  if (autoRemoveOnOpen && postId) {
+    document.querySelectorAll(
+      `.matched-item[data-post-id="${cssEscape(postId)}"], .activity-item[data-post-id="${cssEscape(postId)}"]`
+    ).forEach(node => node.remove());
+
+    for (const listId of ['newTopicsList', 'activityList']) {
+      const list = byId(listId);
+      if (list && list.children.length === 0) {
+        list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
+      }
     }
   }
 
-  try {
-    await removeMatchedPost(postId);
-  } catch { /* silent */ }
+  // 3) 最后打开标签页
+  if (url) chrome.tabs.create({ url });
 }
 
 function cssEscape(value) {
