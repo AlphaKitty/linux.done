@@ -1,6 +1,6 @@
 {
   "name": "linux.done",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "LINUX DO 社区帖子订阅监控 Chrome 扩展 —— 三维度规则匹配、通知推送、本地缓存",
   "private": true,
   "license": "MIT",
