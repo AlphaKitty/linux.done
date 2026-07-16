@@ -316,6 +316,7 @@ body {
   margin-bottom: 6px;
   cursor: pointer;
   transition: background 0.12s;
+  position: relative;
 }
 
 .matched-item:last-child {
@@ -359,6 +360,35 @@ body {
 
 .matched-item .post-time {
   color: var(--text-muted);
+}
+
+.post-delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.12s, color 0.12s, background 0.12s;
+}
+
+.matched-item:hover .post-delete-btn {
+  opacity: 1;
+}
+
+.post-delete-btn:hover {
+  color: var(--danger);
+  background: rgba(255, 69, 58, 0.1);
 }
 
 /* === Activity content === */

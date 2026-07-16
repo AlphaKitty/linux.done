@@ -173,11 +173,29 @@ function renderNewTopics(posts) {
           <span>${esc(p.category || '')}</span>
           <span class="post-time">${timeStr}</span>
         </div>
+        <button class="post-delete-btn" title="${t('popup.delete')}">✕</button>
       </div>`;
   }).join('');
 
   list.querySelectorAll('.matched-item').forEach(el => {
     el.addEventListener('click', () => handleItemOpen(el));
+  });
+
+  // 删除按钮：从 storage 和 DOM 移除
+  list.querySelectorAll('.post-delete-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const item = btn.closest('.matched-item');
+      const postId = item?.dataset?.postId;
+      if (postId) {
+        removeMatchedPost(postId).catch(() => {});
+      }
+      item?.remove();
+      // 如果删空了，显示空状态
+      if (list.children.length === 0) {
+        list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
+      }
+    });
   });
 }
 
@@ -191,7 +209,8 @@ function renderActivity(posts) {
 
   const sorted = [...posts]
     .filter(p => p.bumpedAt && (p.replyCount || 0) > 0)
-    .sort((a, b) => new Date(b.bumpedAt || 0) - new Date(a.bumpedAt || 0));
+    .sort((a, b) => new Date(b.bumpedAt || 0) - new Date(a.bumpedAt || 0))
+    .slice(0, 5);
 
   if (sorted.length === 0) {
     list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
