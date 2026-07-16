@@ -754,3 +754,47 @@ body::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 2px;
 }
+
+/* ============================================================
+   Light mode
+   ============================================================ */
+
+[data-theme="light"] {
+  --bg: #f2f2f7;
+  --surface: #ffffff;
+  --surface-hover: #e5e5ea;
+  --card-bg: #ffffff;
+  --border: #d1d1d6;
+  --text: #1c1c1e;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --accent: #007aff;
+  --accent-hover: #3395ff;
+  --danger: #ff3b30;
+  --danger-hover: #ff6259;
+  --success: #34c759;
+}
+
+[data-theme="light"] .slider {
+  background: #e0e0e0;
+}
+
+[data-theme="light"] .donate-toggle {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .donate-toggle:hover {
+  box-shadow: 0 4px 18px rgba(0, 122, 255, 0.25);
+}
+
+[data-theme="light"] .donate-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .donate-close {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .donate-close:hover {
+  background: rgba(255, 69, 58, 0.15);
+}

@@ -5,6 +5,7 @@
 import { getSettings, updateSettings, getRules, addRule, updateRule, removeRule, toggleRule } from '../lib/storage.js';
 import { initI18n, t, getLang, setLang } from '../lib/i18n.js';
 import { sendPageView } from '../lib/analytics.js';
+import { initTheme } from '../lib/theme.js';
 
 let catTree = null;
 let catTreeLoading = false;
@@ -14,6 +15,7 @@ let tagsLoaded = false;
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     await initI18n();
+    await initTheme();
     // 并行加载类别树和标签
     await Promise.allSettled([loadCategoryTree(), loadAllTags()]);
     await loadSettings();
@@ -342,6 +344,7 @@ async function handleAddRule() {
 async function loadSettings() {
   const s = await getSettings();
   byId('languageSelect').value = s.language || 'zh';
+  byId('themeSelect').value = s.theme || 'system';
   byId('notificationsEnabled').checked = s.notificationsEnabled !== false;
   byId('ruleCooldown').value = s.ruleCooldownMinutes ?? 10;
   byId('aggregateNotifications').checked = s.aggregateNotifications !== false;
@@ -360,8 +363,10 @@ async function handleSave() {
     doNotDisturbEnd: byId('dndEnd').value ? parseInt(byId('dndEnd').value) : null,
     matchedRetentionHours: parseInt(byId('matchedRetentionHours').value) || 48,
     matchedRetentionMax: parseInt(byId('matchedRetentionMax').value) || 200,
+    theme: byId('themeSelect').value || 'system',
   };
   await updateSettings(newSettings);
+  await initTheme();  // 立即应用主题
   try { await chrome.runtime.sendMessage({ type: 'UPDATE_SETTINGS' }); } catch {}
   showSaveStatus(t('options.saved'), 'success');
 }

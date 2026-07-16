@@ -456,3 +456,30 @@ body {
   font-size: 10.5px;
   color: var(--text-muted);
 }
+
+/* ============================================================
+   Light mode
+   ============================================================ */
+
+[data-theme="light"] {
+  --bg: #f2f2f7;
+  --surface: #ffffff;
+  --surface-hover: #e5e5ea;
+  --border: #d1d1d6;
+  --text: #1c1c1e;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --accent: #007aff;
+  --accent-hover: #3395ff;
+  --success: #34c759;
+  --danger: #ff3b30;
+}
+
+[data-theme="light"] .activity-content {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .tip-banner {
+  background: rgba(255, 159, 10, 0.06);
+  border-color: rgba(255, 159, 10, 0.2);
+}

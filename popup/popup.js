@@ -5,6 +5,7 @@
 import { getMatchedPosts, clearMatchedPosts, removeMatchedPost, getSettings, updateSettings } from '../lib/storage.js';
 import { initI18n, t } from '../lib/i18n.js';
 import { sendPageView } from '../lib/analytics.js';
+import { initTheme } from '../lib/theme.js';
 
 /** 阅后即焚：点击后从弹窗列表移除，默认开启 */
 let autoRemoveOnOpen = true;
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 异步加载数据
   (async () => {
     await initI18n();
+    await initTheme();
     applyI18n();
     checkNotificationPermission();
     bindButtons();
