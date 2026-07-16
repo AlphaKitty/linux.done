@@ -206,7 +206,7 @@ async function performScan() {
     const enabledRules = rules.filter(r => r.enabled);
     console.log(PREFIX, `[${scanId}] 步骤 2/6: 规则检查, 共 ${rules.length} 条, 启用 ${enabledRules.length} 条`);
     enabledRules.forEach((r, i) => {
-      console.log(PREFIX, `[${scanId}]   规则[${i}]: "${r.name}" cats=[${r.categories}] tags=[${r.tags}] keywords=[${r.keywords}]`);
+      console.log(PREFIX, `[${scanId}]   规则[${i}]: "${r.name}" cats=[${r.categories}] tags=[${r.tags}] keywords=[${r.keywords}] blocked=[${r.blockedWords}]`);
     });
     if (enabledRules.length === 0) {
       console.log(PREFIX, '无启用规则');

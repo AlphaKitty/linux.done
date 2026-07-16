@@ -142,6 +142,10 @@ function renderRuleCard(rule) {
     `<span class="keyword-chip">${esc(kw)}<span class="kw-remove" data-kw="${esc(kw)}">✕</span></span>`
   ).join('');
 
+  const bwChips = (rule.blockedWords || []).map(bw =>
+    `<span class="keyword-chip">${esc(bw)}<span class="bw-remove" data-bw="${esc(bw)}">✕</span></span>`
+  ).join('');
+
   return `
     <div class="rule-card" data-rule-id="${id}">
       <div class="rule-card-header">
@@ -177,6 +181,15 @@ function renderRuleCard(rule) {
         <div class="keyword-row">
           ${kwChips}
           <input class="keyword-input-inline" placeholder="${t('rule.add_keyword')}" maxlength="30">
+          <button class="add-kw-btn">+</button>
+        </div>
+      </div>
+
+      <div class="rule-section">
+        <span class="rule-section-label">${t('rule.blocked_words')}</span>
+        <div class="keyword-row">
+          ${bwChips}
+          <input class="keyword-input-inline" placeholder="${t('rule.add_blocked_word')}" maxlength="30">
           <button class="add-kw-btn">+</button>
         </div>
       </div>
@@ -279,6 +292,35 @@ function bindRuleEvents(rule) {
       await loadRules();
     });
   });
+
+  // — 屏蔽词 — (复用关键词的 class，用索引区分)
+  const bwInput = el.querySelectorAll('.keyword-input-inline')[1];
+  const addBwBtn = el.querySelectorAll('.add-kw-btn')[1];
+
+  async function addBw() {
+    const bw = bwInput.value.trim();
+    if (!bw) return;
+    const r = await getRules();
+    const ru = r.find(x => x.id === rule.id);
+    if (!ru) return;
+    await updateRule(rule.id, { blockedWords: [...(ru.blockedWords || []), bw] });
+    bwInput.value = '';
+    await loadRules();
+  }
+
+  bwInput?.addEventListener('keydown', e => { if (e.key === 'Enter') addBw(); });
+  addBwBtn?.addEventListener('click', addBw);
+
+  el.querySelectorAll('.bw-remove').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const bw = btn.dataset.bw;
+      const r = await getRules();
+      const ru = r.find(x => x.id === rule.id);
+      if (!ru) return;
+      await updateRule(rule.id, { blockedWords: (ru.blockedWords || []).filter(w => w !== bw) });
+      await loadRules();
+    });
+  });
 }
 
 // ============================================================
@@ -289,7 +331,7 @@ async function handleAddRule() {
   const count = (await getRules()).length + 1;
   const name = t('options.rule_placeholder', { n: count });
   const defaultCat = catTree?.tree?.[0]?.name || '福利羊毛';
-  await addRule(name, [defaultCat], [], []);
+  await addRule(name, [defaultCat], [], [], []);
   await loadRules();
 }
 

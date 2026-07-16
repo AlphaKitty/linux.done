@@ -502,13 +502,13 @@ input, .input, .select, button {
   color: var(--text);
 }
 
-.keyword-chip .kw-remove {
+.keyword-chip .kw-remove, .keyword-chip .bw-remove {
   cursor: pointer;
   opacity: 0.4;
   font-size: 12px;
 }
 
-.keyword-chip .kw-remove:hover {
+.keyword-chip .kw-remove:hover, .keyword-chip .bw-remove:hover {
   opacity: 1;
   color: var(--danger);
 }

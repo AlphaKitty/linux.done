@@ -43,6 +43,8 @@ function createSafeObserver(fn, target, config) {
 // 初始化
 // ============================================================
 
+let mbSubscribed = false;
+
 (async () => {
   // 立即提取一次当前数据（首次加载后 1 秒）
   setTimeout(async () => {
@@ -98,7 +100,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'PROXY_FETCH') {
     const url = message.url;
-    if (!url.startsWith('https://linux.do') || !url.endsWith('.json')) {
+    const pathOnly = url.split('?')[0];
+    if (!url.startsWith('https://linux.do') || !pathOnly.endsWith('.json')) {
       sendResponse({ success: false, error: 'invalid url' });
       return false;
     }
@@ -139,8 +142,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // ============================================================
 // Discourse 实时监听 + 话题提取
 // ============================================================
-
-let mbSubscribed = false;
 
 async function startMessageBusPolling() {
   if (!isTargetSite()) return;
