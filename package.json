@@ -1,0 +1,30 @@
+{
+  "name": "linux.done",
+  "version": "1.0.5",
+  "description": "LINUX DO 社区帖子订阅监控 Chrome 扩展 —— 三维度规则匹配、通知推送、本地缓存",
+  "private": true,
+  "license": "MIT",
+  "author": "NullPointer",
+  "homepage": "https://linux.do",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<your-username>/linux.done.git"
+  },
+  "bugs": {
+    "url": "https://github.com/<your-username>/linux.done/issues"
+  },
+  "keywords": [
+    "chrome-extension",
+    "linux.do",
+    "discourse",
+    "notifications",
+    "manifest-v3"
+  ],
+  "scripts": {
+    "generate-icons": "node icons/generate-icons.cjs",
+    "pack": "zip -r ../linux.done-v$npm_package_version.zip . -x '*.git*' -x 'node_modules/*' -x '*.zip' -x '.DS_Store'"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

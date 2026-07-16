@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "linux.done",
+  "version": "1.0.5",
+  "description": "LINUX DO 订阅式帖子监控插件：三维度规则（分类×标签×关键词）、定时轮询、浏览器通知推送",
+  "author": "linux.done",
+  "homepage_url": "https://linux.do",
+
+  "permissions": [
+    "storage",
+    "notifications",
+    "alarms",
+    "contextMenus",
+    "scripting"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; connect-src 'self' https://www.google-analytics.com https://linux.do"
+  },
+
+  "host_permissions": [
+    "https://linux.do/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "linux.done",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://linux.do/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

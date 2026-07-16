@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="options.title">linux.done – Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <!-- Loading overlay — hides the English fallback text until ready -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-overlay-text" data-i18n="rule.loading">加载中…</div>
+  </div>
+  <div id="app">
+    <header class="header">
+      <div class="header-left">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <h1>linux.done</h1>
+        <span class="badge">v1.0</span>
+      </div>
+    </header>
+
+    <div class="container">
+
+      <!-- Rules -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title" data-i18n="options.add_rule">Subscription Rules</h2>
+            <p class="card-desc" data-i18n="card.rules_desc">All dimensions optional. Leave empty to match all.</p>
+          </div>
+          <button class="btn btn-primary" id="addRuleBtn" data-i18n="options.add_rule">+ Add Rule</button>
+        </div>
+        <div id="ruleList" class="rule-list">
+          <div class="empty-state" data-i18n="options.no_rules">No rules yet</div>
+        </div>
+      </section>
+
+      <!-- Language -->
+      <section class="card" data-i18n-section="language">
+        <h2 class="card-title">Language / 语言</h2>
+        <div class="form-group">
+          <div class="form-label"><span>Language / 语言</span></div>
+          <select id="languageSelect" class="select" style="min-width:120px">
+            <option value="zh">简体中文</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section class="card">
+        <h2 class="card-title" data-i18n="setting.notifications">Notifications</h2>
+        <div class="form-group">
+          <div class="form-label"><span data-i18n="setting.notif_enabled">Enabled</span></div>
+          <label class="switch"><input type="checkbox" id="notificationsEnabled" checked><span class="slider"></span></label>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span data-i18n="setting.cooldown">Cooldown</span><span class="form-hint" data-i18n="setting.cooldown_hint">Minimum gap between notifications</span></div>
+          <select id="ruleCooldown" class="select">
+            <option value="0" data-i18n="setting.cooldown_off">Off</option>
+            <option value="5" data-i18n="setting.cooldown_5">5 min</option>
+            <option value="10" data-i18n="setting.cooldown_10">10 min</option>
+            <option value="30" data-i18n="setting.cooldown_30">30 min</option>
+            <option value="60" data-i18n="setting.cooldown_1h">1 hr</option>
+            <option value="1440" data-i18n="setting.cooldown_day">Daily digest</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span data-i18n="setting.aggregate">Aggregate</span><span class="form-hint" data-i18n="setting.aggregate_hint">Group into one notification</span></div>
+          <label class="switch"><input type="checkbox" id="aggregateNotifications" checked><span class="slider"></span></label>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span data-i18n="setting.dnd">Do Not Disturb</span></div>
+          <div class="dnd-row">
+            <select id="dndStart" class="select">
+              <option value="" data-i18n="dnd.off">Off</option>
+              <option value="22">22:00</option>
+              <option value="23">23:00</option>
+              <option value="0">00:00</option>
+              <option value="1">01:00</option>
+              <option value="2">02:00</option>
+            </select>
+            <span class="sep" data-i18n="dnd.to">to</span>
+            <select id="dndEnd" class="select">
+              <option value="" data-i18n="dnd.off">Off</option>
+              <option value="6">06:00</option>
+              <option value="7">07:00</option>
+              <option value="8">08:00</option>
+              <option value="9">09:00</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Storage Retention -->
+      <section class="card">
+        <h2 class="card-title" data-i18n="setting.retention">Storage</h2>
+        <div class="form-group">
+          <div class="form-label"><span data-i18n="setting.retention_hours">Keep period</span><span class="form-hint" data-i18n="setting.retention_hours_hint">Remove posts after this many hours</span></div>
+          <select id="matchedRetentionHours" class="select">
+            <option value="12">12 h</option>
+            <option value="24">24 h</option>
+            <option value="48">48 h</option>
+            <option value="72">72 h</option>
+            <option value="168">7 d</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span data-i18n="setting.retention_max">Max items</span><span class="form-hint" data-i18n="setting.retention_max_hint">Keep at most</span></div>
+          <select id="matchedRetentionMax" class="select">
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+          </select>
+        </div>
+        <div class="card-desc" style="padding:0 16px 14px;color:var(--text-muted);font-size:11px;line-height:1.6" data-i18n="setting.retention_note">
+          Default: keep 48 hours / 200 items — enough for ~2 days of browsing at twice-daily checks, under 200KB storage usage.
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="card">
+        <h2 class="card-title">❓ 常见问题</h2>
+        <div class="faq-item" style="padding:12px 16px;border-top:1px solid var(--border);">
+          <div class="faq-q" style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;">我为什么需要这个插件？</div>
+          <div class="faq-a" style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+            <p>LINUX DO 每天新帖很多，真正跟你有关系的大概就那么几个——比如有人提到你关注的工具、分享了你要的资源、或者聊到了你会的话题。</p>
+            <p style="margin-top:6px;">这个插件就是你的<strong>"私人雷达"</strong>：你设好关键词规则后，它 7×24 帮你盯着论坛。匹配到帖子立刻浏览器弹通知，你不用一遍遍手动刷新，也不会错过想参与的话题。</p>
+          </div>
+        </div>
+        <div class="faq-item" style="padding:12px 16px;border-top:1px solid var(--border);">
+          <div class="faq-q" style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;">为什么我明明设了规则，有些帖子却没通知？</div>
+          <div class="faq-a" style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+            <p>可能有以下几种情况，可以逐一排查：</p>
+            <p style="margin-top:6px;">① <strong>你已经看过这个帖子了。</strong>插件会自动跳过你已经点开过的帖子，避免重复打扰。</p>
+            <p style="margin-top:6px;">② <strong>规则只选了类别，没选标签或关键词。</strong>仅按类别匹配范围太宽，插件要求至少选一个标签或一个关键词才能生效。</p>
+            <p style="margin-top:6px;">③ <strong>同一规则在冷却期内。</strong>同一条规则触发后，默认 10 分钟内不会再次对同一类帖子发通知，防止刷屏。</p>
+            <p style="margin-top:6px;">④ <strong>帖子发布时间太久了。</strong>如果设置了保留策略，超过设定时长的旧帖会被自动过滤。</p>
+            <p style="margin-top:6px;">⑤ <strong>规则被禁用了。</strong>检查规则卡片左侧的开关是否为开启状态。</p>
+          </div>
+        </div>
+        <div class="faq-item" style="padding:12px 16px;border-top:1px solid var(--border);">
+          <div class="faq-q" style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;">我需要一直开着 LINUX DO 页面吗？</div>
+          <div class="faq-a" style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+            <p><strong>打开 LINUX DO 页面时：</strong>Content Script 会注入页面，直接监听论坛自带的 WebSocket 实时推送。新帖子一到就匹配你的规则，<strong>几乎秒级通知</strong>。此模式下后台轮询完全跳过，不产生额外请求。</p>
+            <p style="margin-top:6px;"><strong>关闭所有 LINUX DO 页面时：</strong>Content Script 不存在了，后台 Service Worker 接管——每 10 分钟轮询一次最新帖子列表，匹配到规则就发通知。你已经看过的帖子会被自动跳过，不会重复打扰。</p>
+          </div>
+        </div>
+        <div class="faq-item" style="padding:12px 16px;border-top:1px solid var(--border);">
+          <div class="faq-q" style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;">这个插件会对 LINUX DO 网站和我的设备造成很大负担吗？</div>
+          <div class="faq-a" style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+            <p><strong>不会。</strong>插件的设计目标就是"几乎零负担"：</p>
+            <p style="margin-top:6px;">对 <strong>LINUX DO 网站</strong>而言——开着页面时，数据来自页面自身的 WebSocket 推送，<strong>不产生额外 API 请求</strong>；后台轮询 10 分钟才发一次请求，且走缓存 + 延迟策略，绝不会对服务器造成压力。</p>
+            <p style="margin-top:6px;">对你的<strong>设备</strong>而言——Service Worker 只在轮询瞬间唤醒（几秒即休眠），Content Script 只在你打开论坛时才注入，匹配逻辑是简单的字符串比较，CPU 和内存占用可以忽略不计。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Save -->
+      <div class="save-bar">
+        <button class="btn btn-primary" id="saveBtn" data-i18n="options.save">Save</button>
+        <span id="saveStatus" class="save-status"></span>
+      </div>
+
+      <!-- Donation — floating toggle + card -->
+      <button class="donate-toggle" id="donateToggle" title="打赏支持">😁</button>
+      <section class="donate-card card" id="donateCard" style="display:none">
+        <button class="donate-close" id="donateClose">✕</button>
+        <div class="donate-qrs">
+          <div class="donate-item">
+            <img src="../icons/wechat-pay.png" alt="打赏" class="donate-img" data-donate-img>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="options.js" type="module"></script>
+</body>
+</html>

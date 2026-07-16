@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs & caches
+*.log
+npm-debug.log*
+.cache/
+.temp/
+.tmp/
+
+# Env / secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# Local packaging / release artifacts
+*.zip
+*.crx
+*.pem
+dist/
+release/
+build/
+.output/
+
+# Test / automation dumps
+.playwright-mcp/
+playwright-report/
+test-results/
+coverage/
+
+# Optional local overrides
+*.local
+*.local.*

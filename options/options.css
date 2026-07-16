@@ -1,0 +1,756 @@
+/* ============================================================
+   linux.done - Settings — macOS System Preferences style
+   ============================================================ */
+
+:root {
+  --bg: #1c1c1e;
+  --surface: #2c2c2e;
+  --surface-hover: #3a3a3c;
+  --card-bg: #222224;
+  --border: #38383a;
+  --text: #f5f5f7;
+  --text-secondary: #98989d;
+  --text-muted: #636366;
+  --accent: #0a84ff;
+  --accent-hover: #409cff;
+  --danger: #ff453a;
+  --danger-hover: #ff6a5a;
+  --success: #30d158;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --radius-xs: 5px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 580px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 0 24px 48px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 28px 0 18px;
+  margin-bottom: 24px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent);
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  background: var(--surface);
+  border-radius: 20px;
+}
+
+/* Cards — macOS pref pane style */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 16px 6px;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 0 16px 10px;
+  line-height: 1.5;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px 10px;
+}
+
+.card-header .card-title {
+  padding: 0;
+  margin-bottom: 2px;
+}
+
+.card-header .card-desc {
+  padding: 0;
+}
+
+/* Form rows — macOS pref pane divider style */
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+}
+
+.form-group:first-of-type {
+  border-top: none;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 13px;
+  color: var(--text);
+  padding-right: 12px;
+  flex: 1;
+}
+
+.form-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Inputs — macOS style */
+input, .input, .select, button {
+  font-family: inherit;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.select {
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  min-width: 90px;
+}
+
+.select:focus {
+  border-color: var(--accent);
+}
+
+.select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: inherit;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+.btn-danger:hover {
+  background: rgba(255, 69, 58, 0.08);
+  border-color: var(--danger);
+}
+
+/* Toggle switch — macOS style */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #666668;
+  border-radius: 24px;
+  transition: 0.2s;
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  bottom: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.switch input:checked + .slider {
+  background: var(--accent);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(18px);
+}
+
+/* DND */
+.dnd-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sep {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Save bar */
+.save-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0 0;
+}
+
+.save-status {
+  font-size: 12px;
+  color: var(--success);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.save-status.show {
+  opacity: 1;
+}
+
+/* ============================================================
+   Rules
+   ============================================================ */
+
+.rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.rule-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.rule-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.rule-name-input {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 0;
+  outline: none;
+  width: 180px;
+}
+
+.rule-name-input::placeholder {
+  color: var(--text-muted);
+}
+
+.rule-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Rule dimensions */
+.rule-section {
+  margin-bottom: 10px;
+}
+
+.rule-section:last-child {
+  margin-bottom: 0;
+}
+
+.rule-section-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+/* Chips */
+.chip-group {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.cat-chip, .tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.12s;
+  user-select: none;
+}
+
+.cat-chip:hover, .tag-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.cat-chip.active {
+  background: rgba(10, 132, 255, 0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag-chip.active {
+  background: rgba(48, 209, 88, 0.12);
+  border-color: #30d158;
+  color: #30d158;
+}
+
+.tag-chip .tag-count {
+  font-size: 10px;
+  opacity: 0.5;
+}
+
+.tag-chip-remove {
+  cursor: pointer;
+  opacity: 0.4;
+  font-size: 12px;
+  line-height: 1;
+  margin-left: 2px;
+}
+
+.tag-chip-remove:hover {
+  opacity: 1;
+  color: var(--danger);
+}
+
+/* Tag panel */
+.tag-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 8px;
+}
+
+.tag-search-row {
+  margin-bottom: 6px;
+}
+
+.tag-filter-input {
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+}
+
+.tag-filter-input:focus {
+  border-color: var(--accent);
+}
+
+.tag-chips-container {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  max-height: 120px;
+  overflow-y: auto;
+  min-height: 30px;
+}
+
+.tag-chips-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+.tag-chips-container::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* Keywords */
+.keyword-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.keyword-input-inline {
+  padding: 5px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+  width: 130px;
+}
+
+.keyword-input-inline:focus {
+  border-color: var(--accent);
+}
+
+.keyword-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  background: rgba(10, 132, 255, 0.1);
+  border: 1px solid rgba(10, 132, 255, 0.25);
+  border-radius: 100px;
+  font-size: 11.5px;
+  color: var(--text);
+}
+
+.keyword-chip .kw-remove {
+  cursor: pointer;
+  opacity: 0.4;
+  font-size: 12px;
+}
+
+.keyword-chip .kw-remove:hover {
+  opacity: 1;
+  color: var(--danger);
+}
+
+.add-kw-btn {
+  padding: 5px 10px;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.add-kw-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================================
+   Loading overlay
+   ============================================================ */
+
+.loading-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  gap: 16px;
+  transition: opacity 0.3s ease;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-overlay-text {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   Donation — floating toggle at bottom-right
+   ============================================================ */
+
+/* 笑脸切换按钮 — 始终可见 */
+.donate-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 101;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--card-bg);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donate-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px rgba(10, 132, 255, 0.3);
+}
+
+.donate-toggle:active {
+  transform: scale(0.95);
+}
+
+/* 打赏浮层卡片 — 默认隐藏 */
+.donate-card {
+  position: fixed;
+  right: 16px;
+  bottom: 72px;
+  z-index: 100;
+  margin: 0;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  width: auto;
+  background: var(--card-bg);
+  padding: 0;
+  overflow: hidden;
+  animation: donateSlideUp 0.25s ease;
+}
+
+@keyframes donateSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.donate-card .card-title {
+  display: none;
+}
+
+.donate-card .card-desc {
+  display: none;
+}
+
+/* 关闭按钮 */
+.donate-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+}
+
+.donate-close:hover {
+  background: rgba(255, 69, 58, 0.3);
+  color: var(--danger);
+}
+
+.donate-qrs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+}
+
+.donate-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.donate-img {
+  width: 260px;
+  height: 260px;
+  border-radius: var(--radius-xs);
+  object-fit: contain;
+}
+
+.donate-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   Skeleton / shimmer
+   ============================================================ */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-text {
+  display: inline-block;
+  height: 12px;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.skeleton-chip {
+  display: inline-block;
+  height: 22px;
+  width: 60px;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--surface) 25%, var(--surface-hover) 50%, var(--surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.skeleton-chip-wide {
+  width: 80px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.chip-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Scrollbar for rule list */
+.rule-list::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.rule-list::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rule-list::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
