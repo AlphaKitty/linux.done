@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "linux.done",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "LINUX DO 订阅式帖子监控插件：三维度规则（分类×标签×关键词）、定时轮询、浏览器通知推送",
   "author": "linux.done",
   "homepage_url": "https://linux.do",
