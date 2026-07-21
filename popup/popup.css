@@ -391,6 +391,36 @@ body {
   background: rgba(255, 69, 58, 0.1);
 }
 
+/* === 删除动画 === */
+@keyframes slideOutFade {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 80px;
+    margin-bottom: 6px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(30px);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.matched-item.removing,
+.activity-item.removing {
+  animation: slideOutFade 0.3s ease-out forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 /* === Activity content === */
 .activity-item {
   padding: 10px 12px;

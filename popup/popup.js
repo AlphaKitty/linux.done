@@ -179,22 +179,17 @@ function renderNewTopics(posts) {
 
   list.querySelectorAll('.matched-item').forEach(el => {
     el.addEventListener('click', () => handleItemOpen(el));
+    el.addEventListener('auxclick', (e) => {
+      if (e.button === 1) { e.preventDefault(); handleItemOpen(el, true); }
+    });
   });
 
-  // 删除按钮：从 storage 和 DOM 移除
+  // 删除按钮：触发动画后移除
   list.querySelectorAll('.post-delete-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const item = btn.closest('.matched-item');
-      const postId = item?.dataset?.postId;
-      if (postId) {
-        removeMatchedPost(postId).catch(() => {});
-      }
-      item?.remove();
-      // 如果删空了，显示空状态
-      if (list.children.length === 0) {
-        list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
-      }
+      removeItemFromLists(item?.dataset?.postId);
     });
   });
 }
@@ -236,11 +231,15 @@ function renderActivity(posts) {
       </div>`;
   }).join('');
 
-  // 绑定点击跳转
+  // 绑定点击跳转（左键 + 中键）
   list.querySelectorAll('.activity-item').forEach(el => {
     el.addEventListener('click', (e) => {
       if (e.target.closest('.activity-toggle')) return;
       handleItemOpen(el);
+    });
+    el.addEventListener('auxclick', (e) => {
+      if (e.target.closest('.activity-toggle')) return;
+      if (e.button === 1) { e.preventDefault(); handleItemOpen(el, true); }
     });
   });
 
@@ -433,36 +432,48 @@ async function handleToggleAutoRemove() {
 }
 
 /**
+ * 从 storage 和两侧列表 DOM 中移除帖子（阅后即焚公共逻辑）
+ * 先触发滑出动画，动画结束后再从 DOM 删除。
+ */
+async function removeItemFromLists(postId) {
+  if (!postId) return;
+  try { await removeMatchedPost(postId); } catch {}
+
+  const selector = `.matched-item[data-post-id="${cssEscape(postId)}"], .activity-item[data-post-id="${cssEscape(postId)}"]`;
+  const items = document.querySelectorAll(selector);
+
+  items.forEach(item => {
+    item.classList.add('removing');
+    item.addEventListener('animationend', () => {
+      item.remove();
+      // 动画结束后检查是否需要显示空状态
+      for (const listId of ['newTopicsList', 'activityList']) {
+        const list = byId(listId);
+        if (list && list.children.length === 0) {
+          list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
+        }
+      }
+    }, { once: true });
+  });
+}
+
+/**
  * 点击帖子/互动：打开链接；若开启阅后即焚则从 storage 与两侧列表移除。
  *
- * ⚠️ 顺序重要：chrome.tabs.create 打开标签页会关闭 popup，
- * 必须先 await storage 写入完成再打开标签页。
+ * @param {HTMLElement} el - 被点击的条目元素
+ * @param {boolean} background - true = 中键点击，在后台标签页打开，保持 popup 不关闭
  */
-async function handleItemOpen(el) {
+async function handleItemOpen(el, background = false) {
   const url = el?.dataset?.url;
   const postId = el?.dataset?.postId;
 
-  // 1) 先从 storage 移除（在打开标签页之前，确保异步写入完成）
+  // 阅后即焚：先从 storage 和 DOM 移除
   if (autoRemoveOnOpen && postId) {
-    try { await removeMatchedPost(postId); } catch {}
+    await removeItemFromLists(postId);
   }
 
-  // 2) 从 DOM 移除
-  if (autoRemoveOnOpen && postId) {
-    document.querySelectorAll(
-      `.matched-item[data-post-id="${cssEscape(postId)}"], .activity-item[data-post-id="${cssEscape(postId)}"]`
-    ).forEach(node => node.remove());
-
-    for (const listId of ['newTopicsList', 'activityList']) {
-      const list = byId(listId);
-      if (list && list.children.length === 0) {
-        list.innerHTML = `<div class="empty-state">${t('popup.no_matches')}</div>`;
-      }
-    }
-  }
-
-  // 3) 最后打开标签页
-  if (url) chrome.tabs.create({ url });
+  // 打开标签页（background=true 时 active=false，popup 保持打开）
+  if (url) chrome.tabs.create({ url, active: !background });
 }
 
 function cssEscape(value) {
